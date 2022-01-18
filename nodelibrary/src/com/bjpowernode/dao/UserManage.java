@@ -11,4 +11,8 @@ public interface UserManage {
     void addUser(User user);
 
     void updateUser(User user);
+
+    void deleteUser(int id);
+
+    void frozenUser(int id);
 }

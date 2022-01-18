@@ -1,6 +1,9 @@
 
 package com.bjpowernode.module.book;
 
+import com.bjpowernode.dao.BookManage;
+import com.bjpowernode.service.BookService;
+import com.bjpowernode.service.impl.BookServiceImpl;
 import com.gn.App;
 import com.bjpowernode.bean.Book;
 import com.bjpowernode.bean.Constant;
@@ -25,6 +28,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -59,12 +63,16 @@ public class BookViewCtrl implements Initializable {
 
     ObservableList<Book> books = FXCollections.observableArrayList();
 
+    private BookService bookService = new BookServiceImpl();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        books.add(new Book(1, "java实战入门", "张三", Constant.TYPE_COMPUTER, "12-987", "XX出版社", Constant.STATUS_STORAGE));
-        books.add(new Book(2, "编程之道", "李四", Constant.TYPE_COMPUTER, "1245-987", "XX出版社", Constant.STATUS_STORAGE));
-        books.add(new Book(3, "颈椎病康复指南", "王五", Constant.TYPE_COMPUTER, "08712-987", "XX出版社", Constant.STATUS_STORAGE));
+//        books.add(new Book(1, "java实战入门", "张三", Constant.TYPE_COMPUTER, "12-987", "XX出版社", Constant.STATUS_STORAGE));
+//        books.add(new Book(2, "编程之道", "李四", Constant.TYPE_COMPUTER, "1245-987", "XX出版社", Constant.STATUS_STORAGE));
+//        books.add(new Book(3, "颈椎病康复指南", "王五", Constant.TYPE_COMPUTER, "08712-987", "XX出版社", Constant.STATUS_STORAGE));
+        List<Book> booksList = bookService.select();
+        books.addAll(booksList);
         c1.setCellValueFactory(new PropertyValueFactory<>("id"));
         c2.setCellValueFactory(new PropertyValueFactory<>("bookName"));
         c3.setCellValueFactory(new PropertyValueFactory<>("author"));
@@ -120,6 +128,7 @@ public class BookViewCtrl implements Initializable {
         boolean bookFlag = "".equals(bookName);
         boolean isbnFlag = "".equals(isbn);
         ObservableList<Book> result = books;
+//        books.addAll(bookService.select());
         if (bookFlag && isbnFlag) {
             return;
         }else {

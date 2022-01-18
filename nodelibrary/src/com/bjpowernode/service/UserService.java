@@ -20,4 +20,14 @@ public interface UserService {
      * update user
      */
     void updateService(User user);
+
+    /**
+     * delete user
+     */
+    void deleteService(int id);
+
+    /**
+     * frozen user
+     */
+    void frozenService(int id);
 }

@@ -24,4 +24,14 @@ public class UserServiceImpl implements UserService {
     public void updateService(User user) {
         userManage.updateUser(user);
     }
+
+    @Override
+    public void deleteService(int id) {
+        userManage.deleteUser(id);
+    }
+
+    @Override
+    public void frozenService(int id) {
+        userManage.frozenUser(id);
+    }
 }

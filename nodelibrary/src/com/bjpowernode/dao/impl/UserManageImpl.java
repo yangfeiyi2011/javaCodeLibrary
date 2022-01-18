@@ -1,5 +1,6 @@
 package com.bjpowernode.dao.impl;
 
+import com.bjpowernode.bean.Constant;
 import com.bjpowernode.bean.PathConstant;
 import com.bjpowernode.bean.User;
 import com.bjpowernode.dao.UserManage;
@@ -89,5 +90,49 @@ public class UserManageImpl implements UserManage {
         }
     }
 
+    @Override
+    public void deleteUser(int id) {
+        List<User> list = select();
+        User user = list.stream().filter(u -> u.getId() == id).findFirst().get();
+        list.remove(user);
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(new FileOutputStream(PathConstant.USER_PATH));
+            oos.writeObject(list);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (oos != null) {
+                try {
+                    oos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
+    @Override
+    public void frozenUser(int id) {
+        List<User> list = select();
+        User user = list.stream().filter(u -> u.getId() == id).findFirst().get();
+        user.setStatus(Constant.USER_FROZEN);
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(new FileOutputStream(PathConstant.USER_PATH));
+            oos.writeObject(list);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (oos != null) {
+                try {
+                    oos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
